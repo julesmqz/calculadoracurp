@@ -113,7 +113,7 @@ function consonanteInterna(string){
         var settings = $.extend({
             nombre: "PrimerNombre SegundoNombre", //Separados por un Espacio.
             apellido: "ApellidoPaterno ApellidoMaterno", //Separados por un espacio.
-            fechaNacimiento: $.datepicker.formatDate('dd-mm-yy', new Date()), //Por default la fecha de hoy.
+            fechaNacimiento: "01-01-2001", //En formato dd-mm-yyyy.
             lugarNacimiento: "NE", //Por default lo trata como extranjero. Ver lista de valores aceptados.
             sexo: "H" //Sólo puede ser H o M.            
         }, options);
