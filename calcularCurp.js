@@ -82,15 +82,17 @@ function getFecha(fecha){
  * @returns {char} Consonante Interna
  */
 function consonanteInterna(string){
-    var tmp,tmp1;
+    var tmp,tmp1,tmp2;
     tmp1 = 0;
+    tmp2 = 0;
     for (var i = 0; i < string.length; i++) {
-        if (tmp1 < 2 && $.inArray(string[i], vocales) == -1) {
+        if (tmp1 == 0 && $.inArray(string[i], vocales) == -1 && tmp2 != 0) {
             //alert(vocales);
             //alert(apater[i]);
             tmp1 = tmp1 + 1;
             tmp = string[i];
         }
+        tmp2++;
     }
     
     return tmp;
