@@ -1,0 +1,125 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Prueba Calculadora CURP</title>
+<link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<h3>Datos</h3>
+<table class='table table-bordered table-hover'>
+    <tr>
+        <td class='text-danger'>Nombre(s)</td>
+        <td><input id='nombre' type='text' class='form-control' placeholder='Nombre' /></td>
+    </tr>
+    <tr>
+        <td class='text-danger'>Apellido Paterno</td>
+        <td><input id='apater' type='text' class='form-control' placeholder='Apellido Paterno' /></td>
+    </tr>
+    <tr>
+        <td class='text-danger'>Apellido Materno</td>
+        <td><input id='amater' type='text' class='form-control' placeholder='Apellido Materno' /></td>
+    </tr>
+    <tr>
+        <td class='width20 text-danger'>Fecha de Nacimiento</td>
+        <td><input id='fechaNac' type='text' class='form-control' placeholder='dd-mm-aaaa' /></td>
+    </tr>
+    <tr>
+        <td class='text-danger'>Lugar de Nacimiento</td>
+        <td>
+			<select id="lugarNac" class="form-control" name="alumno[lugar_nacimiento]">
+				<option selected="selected" value="">Selecciona una opción</option>
+				<option value="AS">Aguascalientes (AS)</option>
+				<option value="BC">Baja California Norte (BC)</option>
+				<option value="BS">Baja California Sur (BS)</option>
+				<option value="CC">Campeche (CC)</option>
+				<option value="CS">Chiapas (CS)</option>
+				<option value="CH">Chihuahua (CH)</option>
+				<option value="CL">Coahuila (CL)</option>
+				<option value="CM">Colima (CM)</option>
+				<option value="DF">Distrito Federal (DF)</option>
+				<option value="DG">Durango (DG)</option>
+				<option value="GT">Guanajuato (GT)</option>
+				<option value="GR">Guerrero (GR)</option>
+				<option value="HG">Hidalgo (HG)</option>
+				<option value="JC">Jalisco (JC)</option>
+				<option value="MC">México - Estado de (MC)</option>
+				<option value="MN">Michoacán (MN)</option>
+				<option value="MS">Morelos (MS)</option>
+				<option value="NT">Nayarit (NT)</option>
+				<option value="NL">Nuevo León (NL)</option>
+				<option value="OC">Oaxaca (OC)</option>
+				<option value="PL">Puebla (PL)</option>
+				<option value="QT">Querétaro (QT)</option>
+				<option value="QR">Quintana Roo (QR)</option>
+				<option value="SP">San Luis Potosí (SP)</option>
+				<option value="SL">Sinaloa (SL)</option>
+				<option value="SR">Sonora (SR)</option>
+				<option value="TC">Tabasco (TC)</option>
+				<option value="TS">Tamaulipas (TS)</option>
+				<option value="TL">Tlaxcala (TL)</option>
+				<option value="VZ">Veracruz (VZ)</option>
+				<option value="YN">Yucatán (YN)</option>
+				<option value="ZS">Zacatecas (ZS)</option>
+				<option value="SM">Serv. Exterior Mexicano (SM)</option>
+				<option value="NE">Extranjero (NE)</option>
+			</select>
+		</td>
+    </tr>
+    <tr>
+        <td class='text-danger'>Sexo</td>
+        <td>
+			<select id="sexo" class="form-control" name="alumno[sexo]">
+				<option selected="selected" value="">Selecciona una opción</option>
+				<option value="h">Masculino</option>
+				<option value="m">Femenino</option>
+			</select>
+		</td>
+    </tr>
+    <tr>
+        <td><a href="#N" id='curp-link'>Clave CURP</a>&nbsp; &nbsp;<span id='curp-spinner' class='hide fa fa-spinner'></span></td>
+        <td><input id='curp-input' type='text' class='form-control' placeholder='CURP' /></td>
+    </tr>
+</table>
+<div class='clearfix'></div>
+
+<script src="calcularCurp.js"></script>
+<script type='text/javascript'>
+    $(document).ready(function(){
+        
+        
+        $('#curp-link').click(function(){
+            var nombre,apellido,fechaNacimiento,lugarNacimiento,sexo;
+            
+            nombre = $("#nombre").val();
+            apellido = $("#apater").val() + " " + $("#amater").val();
+            fechaNacimiento = $("#fechaNac").val();
+            lugarNacimiento = $("#lugarNac").val();
+            sexo = $("#sexo").val(); //alert(sexo);
+            
+            $("#curp-spinner").addClass('fa-spin');
+            $("#curp-spinner").removeClass('hide');
+            
+            if(nombre != '' && apellido != '' && fechaNacimiento != '' && lugarNacimiento != '' && sexo != ''){
+                $("#curp-input").curp({
+                    nombre: nombre,
+                    apellido: apellido,
+                    fechaNacimiento: fechaNacimiento,
+                    lugarNacimiento: lugarNacimiento,
+                    sexo: sexo
+                },function(){
+                    //alert('some');
+                    $("#curp-spinner").addClass('hide');
+                    $("#curp-spinner").removeClass('fa-spin');
+                });
+            }else{
+                alert('Llene los campos obligatorios o el CURP no puede calcularse.');
+                $("#curp-spinner").addClass('hide');
+                $("#curp-spinner").removeClass('fa-spin');
+            }
+        });
+    });
+</script>
+</body>
+</html>
