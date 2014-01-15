@@ -42,7 +42,7 @@ function limpiaString(str){
     str = str.replace(/\Í|í/g, 'I');
     str = str.replace(/\Ó|ó/g, 'O');
     str = str.replace(/\Ú|ú/g, 'U');
-    str = str.replace(/\Ñ|ñ/g, 'N');
+    str = str.replace(/\Ñ|ñ/g, 'X');
     
     return str;
 }
@@ -55,7 +55,8 @@ function limpiaString(str){
  */
 function segundoString(arreglo){
     var segundo;
-    if(arreglo[1] != undefined){
+	//alert(arreglo[1]);
+    if(arreglo[1] != undefined && arreglo[1] != ''){
         segundo = arreglo[1].toUpperCase();
         //alert(nombre2);
     }else{
@@ -85,15 +86,48 @@ function consonanteInterna(string){
     var tmp,tmp1,tmp2;
     tmp1 = 0;
     tmp2 = 0;
-    for (var i = 0; i < string.length; i++) {
-        if (tmp1 == 0 && $.inArray(string[i], vocales) == -1 && tmp2 != 0) {
-            //alert(vocales);
-            //alert(apater[i]);
-            tmp1 = tmp1 + 1;
-            tmp = string[i];
-        }
-        tmp2++;
-    }
+	
+	if(string != 'SINDEFINIR'){
+		for (var i = 0; i < string.length; i++) {
+			if (tmp1 == 0 && $.inArray(string[i], vocales) == -1 && tmp2 != 0) {
+				//alert(vocales);
+				//alert(apater[i]);
+				tmp1 = tmp1 + 1;
+				tmp = string[i];
+			}
+			tmp2++;
+		}
+	}else{
+		tmp = "X";
+	}
+    
+    
+    return tmp;
+}
+
+/**
+ * Obtiene la primer vocal interna de un String
+ * 
+ * @param {String} string Cadena a verificar
+ * @returns {char} Vocal Interna
+ */
+function vocalInterna(string){
+    var tmp,tmp1,tmp2;
+    tmp1 = 0;
+    tmp2 = 0;
+	
+	if(string != 'SINDEFINIR'){
+		for (var i = 0; i < string.length; i++) {
+			if (tmp1 == 0 && $.inArray(string[i], vocales) != -1 && tmp2 != 0) {
+				tmp1 = tmp1 + 1;
+				tmp = string[i];
+			}
+			tmp2++;
+		}
+	}else{
+		tmp = "X";
+	}
+    
     
     return tmp;
 }
@@ -135,25 +169,21 @@ function consonanteInterna(string){
         amater = segundoString(tmp);
         
         //Obtenemos la primera vocal del apellido paterno
-        tmp1 = 0;
-        for (var i=0; i < apater.length; i++) {
-            if(tmp1 == 0 && $.inArray(apater[i], vocales) > -1){
-                //alert(vocales);
-                //alert(apater[i]);
-                tmp1 = 1;
-                tmp = apater[i];
-            }
-        }
-        curp = apater[0] + tmp; 
+        curp = apater[0] + vocalInterna(apater); 
         
         //Obtenemos la primer letra del apellido materno
-        curp = curp + amater[0];
+		if(amater != 'SINDEFINIR'){
+			curp = curp + amater[0];
+		}else{
+			curp = curp + "X";
+		}
+        
         
         //Obtenemos la primer letra del nombre, si el primer nombre es maria o jose y existe un segundo nombre se utiliza el segundo nombre.
         if($.inArray(nombre1,nombres) > -1 && nombre2 != 'SINDEFINIR'){
-            curp = curp + "" + nombre2[0];
+            curp = curp + nombre2[0];
         }else{
-            curp = curp +""+nombre1[0];
+            curp = curp +nombre1[0];
         }
         
         //Obtenemos la fecha de nacimiento, el sexo y el lugar de nacimiento
